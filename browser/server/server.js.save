@@ -1,14 +1,7 @@
 // modules
 var express = require('express')
-  , https = require('https')
-  , fs = require('fs')
+  , http = require('http')
   , morgan = require('morgan');
-
-var options = {
-  ca: fs.readFileSync(‘filename.ca-bundle'),
-  key: fs.readFileSync(‘filename.key'),
-  cert: fs.readFileSync(‘filename.crt'),
-}
 
 // configuration files
 var configServer = require('./lib/config/server');
@@ -23,7 +16,13 @@ app.use(morgan('dev'));
 require('./lib/routes').serveIndex(app, configServer.staticFolder);
 
 // HTTP server
-var server = https.createServer(options, app);
+
+{
+  key: fs.readFileSync('privkey.pem', 'ascii')
+, cert: fs.readFileSync('fullchain.pem', 'ascii') // a PEM containing the SERVER and ALL INTERMEDIATES
+}
+var server = http.createServer(
+app);
 server.listen(app.get('port'), function () {
   console.log('HTTP server listening on port ' + app.get('port'));
 });

@@ -1,7 +1,10 @@
 import base64
 import os
 import re
+import ssl
+
 import tornado
+import tornado.httpserver
 from io import BytesIO
 from multiprocessing import Process
 from multiprocessing import Queue
@@ -72,13 +75,12 @@ def worker(input_q, output_q):
         with tf.gfile.GFile(PATH_TO_CKPT, 'rb') as fid:
             serialized_graph = fid.read()
             od_graph_def.ParseFromString(serialized_graph)
-            tf.import_graph_def(od_graph_def, name='')
+            tf.import_graph_def(od_graph_def, name='', )
         sess = tf.Session(graph=detection_graph)
-
     while True:
         frame = input_q.get()
         output_q.put(detect_objects(frame, sess, detection_graph))
-    sess.close()
+        # sess.close()
 
 
 class EchoWebSocket(tornado.websocket.WebSocketHandler):
@@ -108,6 +110,8 @@ class EchoWebSocket(tornado.websocket.WebSocketHandler):
         buffer = BytesIO()
         converted.save(buffer, format="JPEG")
         img_str = base64.b64encode(buffer.getvalue())
+        buffer.flush()
+
         self.write_message(img_str)
 
     def on_close(self):
@@ -125,5 +129,14 @@ if __name__ == "__main__":
     application = tornado.web.Application([
         (r"/", EchoWebSocket),
     ])
-    application.listen(8888)
+
+    data_dir = "<path/to/ssl>"
+
+    ssl_ctx = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    ssl_ctx.load_cert_chain(os.path.join(data_dir, "<filename>.crt"),
+                            os.path.join(data_dir, "<filename>"))
+
+    http_server = tornado.httpserver.HTTPServer(application, ssl_options=ssl_ctx)
+
+    http_server.listen(443)
     tornado.ioloop.IOLoop.current().start()

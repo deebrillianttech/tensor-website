@@ -8,7 +8,7 @@ context.fillStyle = '#333';
 context.fillText('Loading...', canvasFace.width / 2 - 30, canvasFace.height / 3);
 
 function newSocket() {
-  return new WebSocket("ws://127.0.0.1:8888");
+  return new WebSocket("wss://<URL>:443");
 }
 
 var socket = newSocket();
