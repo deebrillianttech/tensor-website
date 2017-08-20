@@ -1,4 +1,4 @@
-# Tensorflow-Object-Detector-with-website
+# Tensorflow Object Detector with website
 Website with image recognition from camera
 
 To work with object detector you must:
