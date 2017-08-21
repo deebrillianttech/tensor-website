@@ -7,7 +7,7 @@ To work with object detector you must:
    - Then add names for .crt and .key files
 2. In file server.js:
    - Add ca-bundle, key and crt files
-3. in file receiver.js:
+3. In file receiver.js:
    - Add your wss enpoint address (for example -  wss://example.com:443)
 4. Run npm install in folder 'browser/server'
 
