@@ -111,7 +111,6 @@ class EchoWebSocket(tornado.websocket.WebSocketHandler):
         converted.save(buffer, format="JPEG")
         img_str = base64.b64encode(buffer.getvalue())
         buffer.flush()
-
         self.write_message(img_str)
 
     def on_close(self):
