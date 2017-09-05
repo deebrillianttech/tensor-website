@@ -96,7 +96,7 @@ def draw_bounding_box_on_image(image,
                       (each to be shown on its own line).
     use_normalized_coordinates: If True (default), treat coordinates
       ymin, xmin, ymax, xmax as relative to the image.  Otherwise treat
-      coordinates as absolute.
+      coordinates as absolute
   """
     draw = ImageDraw.Draw(image)
     im_width, im_height = image.size
