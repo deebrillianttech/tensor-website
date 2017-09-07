@@ -20,7 +20,7 @@ import visualization_utils as vis_util
 
 CWD_PATH = os.getcwd()
 
-# Path to frozen detection graph. This is the actual model that is used for the object detection.
+# Path to frozen detection graph. This is the actual model that is used for the object detection
 MODEL_NAME = 'ssd_mobilenet_v1_coco_11_06_2017'
 PATH_TO_CKPT = os.path.join(CWD_PATH, 'object_detection', MODEL_NAME, 'frozen_inference_graph.pb')
 
