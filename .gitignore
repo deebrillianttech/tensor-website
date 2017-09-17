@@ -99,3 +99,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+browser/.DS_Store
+browser/server/.DS_Store
+*.xml
+.idea/Tensorflow-Object-Detector-with-website.iml
+*.ca-bundle
+*.crt
+browser/server/ssl/_adexin_com.key
+.DS_Store
